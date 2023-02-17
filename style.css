@@ -1,0 +1,271 @@
+/*Обнуление*/
+
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+:focus, :active {
+  outline: none;
+}
+
+a:focus, a:active {
+  outline: none;
+}
+
+nav, footer, header, aside {
+  display: block;
+}
+
+body {
+  position: relative;
+  width: 100%;
+  padding-top: 100px;
+  font-size: 16px;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  overflow: hidden;
+}
+
+input, button, textarea {
+  font-family: inherit;
+}
+
+input::-ms-clear {
+  display: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+a, a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+img {
+  vertical-align: top;
+}
+
+/* +++++++++++++ */
+
+.container {
+  width: 90%;
+  margin: 0 auto 0 auto;
+}
+
+.gen-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-image: url('./img/genBackgroundOne.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -20;
+  animation: background-magnification 500s cubic-bezier(1, 0.98, 0, 0.01) infinite;
+}
+
+@keyframes background-magnification {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.battle-background {
+  width: 80%;
+  margin: 0 auto;
+  padding: 55px 0;
+  background: linear-gradient(45deg, rgba(25 130 221 / 40%), rgba(40 78 117 / 40%));
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: block;
+  width: 255px;
+  height: 65px;
+  margin: 20px auto;
+  background-color: #6b7785;
+  color: #fff;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  transition: 0.1s;
+}
+
+.btn:active {
+  transform: scale(0.99);
+  box-shadow: inset 0px 0px 18px 0px #fff;
+  border-radius: 3px;
+}
+
+
+.user-side, .comp-side {
+  width: 40%;
+}
+
+.user-side {
+  justify-content: flex-end;
+}
+
+.hangar-ships {
+  transition: 0.5s;
+}
+
+.comp-side .hangar-ships {
+  margin-left: 20px;
+}
+
+.big-ships, .small-ships {
+  width: 50px;
+}
+
+.ship {
+  width: 30px;
+  background-color: rgb(105 104 110 / 10%);
+  border: 2px groove #323883;
+  cursor: move;
+}
+
+.big-ships .ship+.ship {
+  margin-top: 30px;
+}
+
+.small-ships .ship+.ship {
+  margin-top: 10px;
+}
+
+.comp-side .ship {
+  cursor: default;
+}
+
+.four-deck {
+  height: 120px;
+}
+
+.three-deck {
+  height: 90px;
+}
+
+.two-deck {
+  height: 60px;
+}
+
+.one-deck {
+  height: 30px;
+}
+
+.reverse-four-deck {
+  width: 120px;
+  height: 30px;
+}
+
+.reverse-three-deck {
+  width: 90px;
+  height: 30px;
+}
+
+.reverse-two-deck {
+  width: 60px;
+  height: 30px;
+}
+
+.user-field, .comp-field {
+  position: relative;
+  width: 326px;
+  height: 326px;
+  border: 2px solid #000;
+}
+
+.user-field .ship {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.hover-user-field {
+  box-shadow: 1px 1px 1px #000;
+}
+
+.drag {
+  transform: scale(0);
+}
+
+.field-td {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border: 1px solid rgb(35 70 197);
+  background-color: #f5f5f5;
+}
+
+.col-btn {
+  width: 20%;
+}
+
+.box-btn {
+  width: 100%;
+}
+
+.deployment-ships {
+  background-color: blue;
+}
+
+.hover-field-td {
+  background-color: rgb(0 0 255 / 58%);
+}
+
+.hit {
+  background-color: red;
+}
+
+.none-hit {
+  position: relative;
+}
+
+.none-hit:before {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: black;
+  border-radius: 50%;
+}
+
+.btn-disabled {
+  background-color: #b9bec4;
+}
