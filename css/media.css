@@ -1,0 +1,28 @@
+@media only screen and (max-width: 1250px) {
+  .container {
+    padding: 0 10px;
+  }
+}
+
+@media only screen and (max-width: 1150px) {
+  .battle-background {
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  .col-btn {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    order: -1;
+  }
+  .box-btn {
+    width: auto;
+  }
+  .box-btn + .box-btn {
+    margin-left: 20px;
+  }
+  .user-side, .comp-side {
+    width: 50%;
+    justify-content: center;
+  }
+}
