@@ -1,3 +1,23 @@
+if (innerWidth < 900) {
+  const warningBlock = document.querySelector('#id-box-warning');
+  const btnCloseWarning = document.querySelector('.btn-close-warning');
+
+  function removeAndAddClass(node, removeHtmlClass, addHtmlClass) {
+    node.classList.remove(removeHtmlClass);
+    node.classList.add(addHtmlClass);
+  }
+
+  removeAndAddClass(warningBlock, 'close-box-massage-warning', 'show-box-massage-warning');
+
+  btnCloseWarning.addEventListener(
+    'click', () => {
+      removeAndAddClass(
+        warningBlock,
+        'show-box-massage-warning',
+        'close-box-massage-warning')
+    })
+}
+
 // Поле игрока
 const userTable = document.createElement('table');
 userTable.classList.add('user-table');
@@ -17,6 +37,9 @@ for (let y = 0; y < 10; y++) {
 
   userTable.append(tr);
 }
+
+// Блок сообщений
+const textMassages = document.querySelector('.text-massages-help');
 
 /* Поле компьютера */
 const compField = document.querySelector('.comp-field');
@@ -145,6 +168,7 @@ function dropShip(event) {
   if (countingShipsLaunch.length === 20) {
     btnStartBattle.disabled = false;
     btnStartBattle.classList.remove('btn-disabled');
+    textMassages.innerText = 'Если вас устраивает расстановка кораблей, то нажмите на кнопу <начать сражение>. Если нет, то нажмите на кнопку <авто расстановка> ещё раз.';
   }
 }
 
@@ -186,6 +210,7 @@ function randomNumbers(max) {
 }
 
 function random(field, numberDecks, horizontallyY, horizontallyX, verticallyY, verticallyX, decks) {
+  textMassages.innerText = 'Если вас устраивает расстановка кораблей, то нажмите на кнопу <начать сражение>. Если нет, то нажмите на кнопку <авто расстановка> ещё раз.';
 
   let horizontallyVertically = Math.floor(Math.random() * 2);
 
@@ -350,11 +375,23 @@ function hitCheck(field, dataX, dataY) {
       }
     }
   }
+
+  function fieldDefinition(incomingField) {
+    if (incomingField.classList.contains('comp-field')) {
+      return 'Игрок'
+    }
+    else if (incomingField.classList.contains('user-field')) {
+      return 'Компьютер'
+    }
+  }
+
   if (combatReadyDeckShip > 0) {
-    console.log('ранил');
+    textMassages.innerText = `Попадание! ${fieldDefinition(field)} ходит ещё раз`
+    fieldDefinition(field)
   }
   if (combatReadyDeckShip === 0) {
-    console.log('убил');
+    fieldDefinition(field)
+    textMassages.innerText = `Попадание! Корабль, потоплен. ${fieldDefinition(field)} ходит ещё раз`;
 
     function verticalBlindSpot(field, dataX, dataY, n) {
       for (let i = 0; i <= 4; i++) {
@@ -425,7 +462,7 @@ function hitCheck(field, dataX, dataY) {
 
     let combatReadyDeck = field.querySelectorAll('.combat-ready-deck');
     if (combatReadyDeck.length === 0) {
-      console.log('!!!finish!!!');
+      textMassages.innerText = 'Победа!!!'
       if (field === compField) {
         compField.removeEventListener('click', userShot);
       }
@@ -449,33 +486,37 @@ function userShot(event) {
   if (!cellShot.classList.contains('deployment-ships') && !cellShot.classList.contains('none-hit')) {
     cellShot.classList.add('none-hit');
     compField.removeEventListener('click', userShot);
+    textMassages.innerText = 'Ход компьютера';
     compShot();
   }
 }
 
 function compShot() {
-  let dataY = randomNumbers(10);
-  let dataX = randomNumbers(10);
+  setTimeout(() => {
+    textMassages.innerText = 'Ход игрока';
 
-  for (let i = 0; i < 2; i++) {
-    let cellShotComp = userField.querySelector(`[data-x="${dataX}"][data-y="${dataY}"]`);
-    if (!cellShotComp.classList.contains('none-hit') && !cellShotComp.classList.contains('hit')) {
-      if (cellShotComp.classList.contains('deployment-ships')) {
-        cellShotComp.classList.add('hit');
-        hitCheck(userField, dataX, dataY);
-        compShot();
+    let dataY = randomNumbers(10);
+    let dataX = randomNumbers(10);
+
+    for (let i = 0; i < 2; i++) {
+      let cellShotComp = userField.querySelector(`[data-x="${dataX}"][data-y="${dataY}"]`);
+      if (!cellShotComp.classList.contains('none-hit') && !cellShotComp.classList.contains('hit')) {
+        if (cellShotComp.classList.contains('deployment-ships')) {
+          cellShotComp.classList.add('hit');
+          hitCheck(userField, dataX, dataY);
+          compShot();
+        }
+        if (!cellShotComp.classList.contains('deployment-ships')) {
+          cellShotComp.classList.add('none-hit');
+          compField.addEventListener('click', userShot);
+        }
+        break;
       }
-      if (!cellShotComp.classList.contains('deployment-ships')) {
-        cellShotComp.classList.add('none-hit');
-        compField.addEventListener('click', userShot);
-      }
-      break;
+      dataY = randomNumbers(10);
+      dataX = randomNumbers(10);
+      i = 0;
     }
-    dataY = randomNumbers(10);
-    dataX = randomNumbers(10);
-    i = 0;
-  }
-
+  }, 2000)
 }
 
 function startOver() {
@@ -507,9 +548,11 @@ function startBattle() {
 
   let headsHails = Math.floor(Math.random() * 2);
   if (headsHails === 0) {
+    textMassages.innerText = 'Бой начат! Ход компьютера';
     compShot();
   }
   if (headsHails === 1) {
+    textMassages.innerText = 'Бой начат! Ход игрока';
     compField.addEventListener('click', userShot)
   }
 
