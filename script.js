@@ -1,3 +1,31 @@
+// Предупреждение при загрузке
+const startWarning = document.querySelector('.start-warning');
+const startWarningText = document.querySelector('#id-start-warning-text');
+const btnCloseStartWarning = document.querySelector('.btn-close-start-warning');
+const btnStopStartWarning = document.querySelector('.btn-stop-start-warning');
+
+const isWarningOutput = sessionStorage.getItem('isWarningOutput');
+
+if (isWarningOutput === 'true') {
+  startWarning.classList.add('close-box-massage-warning')
+}
+
+setTimeout(() => {
+  startWarningText.classList.add('opacity1')
+}, 2500);
+
+const funCloseStartWarning = () => {
+  startWarning.classList.add('close-box-massage-warning')
+}
+
+const funStopStartWarning = () => {
+  sessionStorage.setItem('isWarningOutput', true);
+}
+
+startWarning.addEventListener('click', funCloseStartWarning)
+btnStopStartWarning.addEventListener('click', funStopStartWarning)
+
+// Предупреждение разрешение >900px
 if (innerWidth < 900) {
   const warningBlock = document.querySelector('#id-box-warning');
   const btnCloseWarning = document.querySelector('.btn-close-warning');
